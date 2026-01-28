@@ -3,177 +3,455 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acil Durum Kartı</title>
+  <title>Acil Durum İletişim Kartı</title>
   <style>
-    :root {
-      --danger: #ef4444;
-      --success: #22c55e;
-      --dark: #1f2937;
-      --light: #f9fafb;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    :root {
+      --primary-red: #dc2626;
+      --secondary-red: #991b1b;
+      --success-green: #16a34a;
+      --dark-green: #15803d;
+      --bg-light: #f8fafc;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
     body {
-      margin: 0;
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--light);
-      display: flex;
-      justify-content: center;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    .container {
+    .emergency-container {
       width: 100%;
-      max-width: 400px;
-      padding: 24px;
-      animation: fadeIn 0.8s ease-out;
+      max-width: 480px;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* Üst Bölüm - Acil Durum Pulsing Efekti */
-    .header {
-      background: var(--danger);
-      color: white;
-      padding: 30px 20px;
+    /* Emergency Alert Header */
+    .emergency-alert {
+      background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
       border-radius: 24px;
+      padding: 40px 30px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
       position: relative;
       overflow: hidden;
-      margin-bottom: 30px;
+      box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      margin-bottom: 24px;
     }
 
-    .header::before {
+    .emergency-alert::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: white;
-      opacity: 0.1;
-      animation: pulse 2s infinite;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(0.95); opacity: 0.2; }
-      50% { transform: scale(1.05); opacity: 0.1; }
-      100% { transform: scale(0.95); opacity: 0.2; }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
-    .header h1 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
-    .header p { margin: 10px 0 0; font-size: 15px; font-weight: 300; line-height: 1.4; }
+    .alert-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 40px;
+      animation: emergencyPulse 2s ease-in-out infinite;
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 1;
+    }
 
-    /* Kart Tasarımı */
-    .card {
+    @keyframes emergencyPulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+      }
+    }
+
+    .emergency-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .emergency-subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.95);
+      line-height: 1.6;
+      font-weight: 400;
+      position: relative;
+      z-index: 1;
+      max-width: 350px;
+      margin: 0 auto;
+    }
+
+    /* Contact Cards Section */
+    .contacts-section {
       background: white;
-      border-radius: 20px;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-xl);
+      margin-bottom: 20px;
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    .contact-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
       padding: 20px;
-      margin-bottom: 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-      border: 1px solid rgba(0,0,0,0.03);
+      margin-bottom: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
     }
 
-    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+    .contact-card:last-child {
+      margin-bottom: 0;
+    }
 
-    .info-side { display: flex; align-items: center; gap: 15px; }
-    
-    .avatar {
-      width: 50px;
-      height: 50px;
-      background: #f3f4f6;
-      border-radius: 15px;
+    .contact-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--success-green);
+      background: white;
+    }
+
+    .contact-card:active {
+      transform: scale(0.98);
+    }
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .contact-avatar {
+      width: 56px;
+      height: 56px;
+      background: white;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 28px;
+      box-shadow: var(--shadow-sm);
+      border: 2px solid var(--border-color);
+      transition: all 0.3s ease;
     }
 
-    .name { font-size: 18px; font-weight: 700; color: var(--dark); }
-    .relation { font-size: 13px; color: #6b7280; margin-top: 2px; }
+    .contact-card:hover .contact-avatar {
+      transform: scale(1.1) rotate(5deg);
+      border-color: var(--success-green);
+    }
 
-    .call-btn {
-      background: var(--success);
-      color: white;
-      width: 50px;
-      height: 50px;
+    .contact-details {
+      flex: 1;
+    }
+
+    .contact-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+
+    .contact-relation {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .call-button {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--success-green) 0%, var(--dark-green) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      font-size: 20px;
-      transition: 0.2s;
-      box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 3px solid white;
     }
 
-    .call-btn:active { transform: scale(0.9); }
+    .call-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.5);
+    }
 
-    /* Ek Bilgi Notu */
-    .medical-note {
-      background: #fffbeb;
-      border: 1px solid #fef3c7;
-      border-radius: 15px;
-      padding: 15px;
-      margin-top: 10px;
+    .call-button:active {
+      transform: scale(0.95);
+    }
+
+    /* Important Notice */
+    .notice-card {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #fbbf24;
+      border-radius: 16px;
+      padding: 20px;
       display: flex;
+      gap: 16px;
+      align-items: start;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 20px;
+    }
+
+    .notice-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .notice-content {
+      flex: 1;
+    }
+
+    .notice-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 6px;
+    }
+
+    .notice-text {
+      font-size: 14px;
+      color: #78350f;
+      line-height: 1.5;
+    }
+
+    /* Emergency Services Button */
+    .emergency-services {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 20px;
+    }
+
+    .emergency-button {
+      width: 100%;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       gap: 12px;
     }
 
+    .emergency-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+    }
+
+    .emergency-button:active {
+      transform: scale(0.98);
+    }
+
+    /* Footer */
     .footer {
       text-align: center;
+      padding: 20px;
+    }
+
+    .footer-text {
       font-size: 13px;
-      color: #9ca3af;
-      margin-top: 40px;
-      padding-bottom: 20px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .footer-name {
+      font-weight: 700;
+      color: white;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .emergency-alert {
+        padding: 32px 24px;
+      }
+
+      .emergency-title {
+        font-size: 28px;
+      }
+
+      .emergency-subtitle {
+        font-size: 15px;
+      }
+
+      .contacts-section {
+        padding: 20px;
+      }
+
+      .contact-card {
+        padding: 16px;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+      }
+
+      .emergency-container {
+        max-width: 100%;
+      }
+
+      .emergency-alert,
+      .contacts-section,
+      .notice-card {
+        box-shadow: none;
+        border: 2px solid #000;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="container">
-    <div class="header">
-      <h1>ACİL DURUM</h1>
-      <p>Bu telefonun sahibi şu an yardıma ihtiyaç duyuyor olabilir. Lütfen aşağıdaki kişilere haber verin.</p>
+  <div class="emergency-container">
+    <!-- Emergency Header -->
+    <div class="emergency-alert">
+      <div class="alert-icon">🚨</div>
+      <h1 class="emergency-title">ACİL DURUM</h1>
+      <p class="emergency-subtitle">
+        Bu telefonun sahibi şu an yardıma ihtiyaç duyuyor olabilir. Lütfen aşağıdaki kişilerle hemen iletişime geçin.
+      </p>
     </div>
 
-    <div class="card">
-      <div class="info-side">
-        <div class="avatar">👩‍🦰</div>
-        <div>
-          <div class="name">Anne</div>
-          <div class="relation">Yakınlık: Birinci Derece</div>
+    <!-- Emergency Contacts -->
+    <div class="contacts-section">
+      <div class="section-label">Acil İletişim Kişileri</div>
+      
+      <div class="contact-card" onclick="window.location.href='tel:+905301832098'">
+        <div class="contact-info">
+          <div class="contact-avatar">👩‍🦰</div>
+          <div class="contact-details">
+            <div class="contact-name">Anne</div>
+            <div class="contact-relation">Birinci Derece Yakın</div>
+          </div>
+        </div>
+        <a class="call-button" href="tel:+905301832098" onclick="event.stopPropagation()">📞</a>
+      </div>
+
+      <div class="contact-card" onclick="window.location.href='tel:+905327368619'">
+        <div class="contact-info">
+          <div class="contact-avatar">👨‍💼</div>
+          <div class="contact-details">
+            <div class="contact-name">Baba</div>
+            <div class="contact-relation">Birinci Derece Yakın</div>
+          </div>
+        </div>
+        <a class="call-button" href="tel:+905327368619" onclick="event.stopPropagation()">📞</a>
+      </div>
+    </div>
+
+    <!-- Important Notice -->
+    <div class="notice-card">
+      <div class="notice-icon">⚠️</div>
+      <div class="notice-content">
+        <div class="notice-title">Önemli Uyarı</div>
+        <div class="notice-text">
+          Lütfen sakin kalın. Arama yaptıktan sonra kişinin bulunduğu konumu ve durumu net bir şekilde açıklayın. Gerekirse konum bilgisini paylaşın.
         </div>
       </div>
-      <a class="call-btn" href="tel:+905301832098">📞</a>
     </div>
 
-    <div class="card">
-      <div class="info-side">
-        <div class="avatar">👨‍💼</div>
-        <div>
-          <div class="name">Baba</div>
-          <div class="relation">Yakınlık: Birinci Derece</div>
-        </div>
-      </div>
-      <a class="call-btn" href="tel:+905327368619">📞</a>
+    <!-- Emergency Services -->
+    <div class="emergency-services">
+      <button class="emergency-button" onclick="window.location.href='tel:112'">
+        <span style="font-size: 24px;">🚑</span>
+        <span>112 Acil Servis'i Ara</span>
+      </button>
     </div>
 
-    <div class="medical-note">
-      <span>⚠️</span>
-      <div style="font-size: 13px; color: #92400e;">
-        <strong>Önemli Not:</strong> Lütfen sakin olun ve arama yaptıktan sonra konum bilgisini paylaşmayı unutmayın.
-      </div>
-    </div>
-
+    <!-- Footer -->
     <div class="footer">
-      Emirhan Yıldız - Acil Durum Kartı Sistemi
+      <p class="footer-text">
+        <span class="footer-name">Emirhan Yıldız</span> • Acil Durum Kartı
+      </p>
     </div>
   </div>
-
 </body>
 </html>
